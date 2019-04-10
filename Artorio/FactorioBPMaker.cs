@@ -168,21 +168,6 @@ namespace Artorio
                 pngColor.B == wpfColor.B;
         }
 
-        public string Decompress(string blueprint)
-        {
-            string text = blueprint;
-            string output = null;
-
-            if (string.IsNullOrWhiteSpace(text) || text[0] != '0')
-                return null;
-
-            byte[] inData = Convert.FromBase64String(output.Substring(1));
-            DecompressData(inData, out byte[] outData);
-            output = Encoding.UTF8.GetString(outData);
-
-            return output;
-        }
-
         private void InsertJSONItem(int x, int y, string itemName)
         {
             items++;
@@ -223,7 +208,22 @@ namespace Artorio
             }
         }
 
-        private void DecompressData(byte[] inData, out byte[] outData)
+        public static string Decompress(string blueprint)
+        {
+            string text = blueprint;
+            string output = null;
+
+            if (string.IsNullOrWhiteSpace(text) || text[0] != '0')
+                return null;
+
+            byte[] inData = Convert.FromBase64String(text.Substring(1));
+            DecompressData(inData, out byte[] outData);
+            output = Encoding.UTF8.GetString(outData);
+
+            return output;
+        }
+
+        private static void DecompressData(byte[] inData, out byte[] outData)
         {
             using (MemoryStream outMemoryStream = new MemoryStream())
             using (ZOutputStream outZStream = new ZOutputStream(outMemoryStream))
@@ -235,7 +235,7 @@ namespace Artorio
             }
         }
 
-        private void CopyStream(Stream input, Stream output)
+        private static void CopyStream(Stream input, Stream output)
         {
             byte[] buffer = new byte[2000];
             int len;

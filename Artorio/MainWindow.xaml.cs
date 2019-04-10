@@ -278,5 +278,10 @@ namespace Artorio
         {
             new About().ShowDialog();
         }
+
+        private void GetJSONClick(object sender, RoutedEventArgs e)
+        {
+            new GetJSONBP().ShowDialog();
+        }
     }
 }

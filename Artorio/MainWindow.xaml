@@ -24,6 +24,9 @@
             <MenuItem Header="File">
                 <MenuItem Header="Close" Click="MenuCloseClick"/>
             </MenuItem>
+            <MenuItem Header="Tools">
+                <MenuItem Header="Get JSON from blueprint" Click="GetJSONClick"/>
+            </MenuItem>
             <MenuItem Header="Help">
                 <MenuItem Header="About" Click="MenuAboutClick"/>
             </MenuItem>
