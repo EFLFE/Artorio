@@ -5,8 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Artorio"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        ResizeMode="CanMinimize"
+        Title="Artorio" Height="450" Width="690">
+    <Grid x:Name="mainGrid">
+        <TextBox x:Name="inputPath" Height="23" Margin="127,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="543"/>
+        <Button Click="SelectImageClick" Content="Select image file" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="112"/>
+        <Button Click="ConvertAndCopyClick" Content="Convert &amp; copy" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="112"/>
+        <GroupBox Header="Cast Config" HorizontalAlignment="Left" Height="341" Margin="10,69,0,0" VerticalAlignment="Top" Width="657">
+            <ScrollViewer>
+                <StackPanel x:Name="configStack" Orientation="Vertical">
+                    <!--<local:ColorItemCast Height="40" Width="640" VerticalAlignment="Top" HorizontalAlignment="Left"/>-->
+                    <Button Click="AddConfigClick" Content="Add config" Margin="0,10,0,0"/>
+                </StackPanel>
+            </ScrollViewer>
+        </GroupBox>
+        <ProgressBar x:Name="progress" HorizontalAlignment="Left" Height="12" Margin="127,46,0,0" VerticalAlignment="Top" Width="543"/>
+
     </Grid>
 </Window>
