@@ -235,9 +235,7 @@ namespace Artorio
 
         private void MenuAboutClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(
-                "Artorio - convert image to factorio blueprint format. by EFLFE\n\nVersion " + App.VERSION,
-                "About", MessageBoxButton.OK, MessageBoxImage.Information);
+            new About().ShowDialog();
         }
     }
 }
