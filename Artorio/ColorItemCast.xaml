@@ -28,7 +28,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="28,13,0,0" TextWrapping="Wrap" Text="Color (" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="178,13,0,0" TextWrapping="Wrap" Text="to)" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="227,13,0,0" TextWrapping="Wrap" Text="place item" VerticalAlignment="Top"/>
-        <ComboBox x:Name="itemName" HorizontalAlignment="Left" Margin="286,10,0,0" VerticalAlignment="Top" Width="245">
+        <ComboBox x:Name="itemName" IsEditable="false" HorizontalAlignment="Left" Margin="286,10,0,0" VerticalAlignment="Top" Width="245">
             <ComboBoxItem Content="stone-path"/>
             <ComboBoxItem Content="concrete"/>
             <ComboBoxItem Content="hazard-concrete-left"/>
@@ -37,7 +37,7 @@
         </ComboBox>
         <CheckBox x:Name="useRangeColor" HorizontalAlignment="Left" Margin="67,16,0,0" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="85,14,0,0" TextWrapping="Wrap" Text="range from" VerticalAlignment="Top"/>
-        <Rectangle Panel.ZIndex="-1" Fill="#FFA0A6B9" HorizontalAlignment="Left" Margin="59,0,0,0" Width="136"/>
-
+        <!--<Rectangle Panel.ZIndex="-1" Fill="#FFA0A6B9" HorizontalAlignment="Left" Margin="59,0,0,0" Width="136"/>-->
+        <Ellipse Panel.ZIndex="-1" Fill="#FFA0A6B9" HorizontalAlignment="Left" Margin="59,-20,0,0" Height="80" Width="136"/>
     </Grid>
 </UserControl>

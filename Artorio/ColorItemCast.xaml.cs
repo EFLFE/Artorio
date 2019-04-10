@@ -18,9 +18,19 @@ namespace Artorio
 
         public int ID { get; private set; }
 
-        public IReadOnlyFilterConfig GetFilterConfig => filterConfig;
+        public IReadOnlyFilterConfig GetFilterConfig
+        {
+            get
+            {
+                if (App.ExtremeMode)
+                    filterConfig.ItemName = itemName.Text;
+
+                return filterConfig;
+            }
+        }
 
         private FilterConfig filterConfig;
+        private bool isUnloaded;
 
         public ColorItemCast(FilterConfig _filterConfig)
         {
@@ -29,9 +39,13 @@ namespace Artorio
 
             filterConfig = new FilterConfig(false, Colors.White, Colors.White, null);
             itemName.SelectionChanged += ItemName_SelectionChanged;
-            itemName.SelectedIndex = 0;
             useRangeColor.Checked += UseRangeColor_Checked;
             useRangeColor.Unchecked += UseRangeColor_Unchecked;
+
+            if (App.ExtremeMode)
+                itemName.IsEditable = true;
+
+            App.OnExtremeModeChanged += App_OnExtremeModeChanged;
 
             if (_filterConfig != null)
             {
@@ -40,11 +54,17 @@ namespace Artorio
 
                 for (int i = 0; i < itemName.Items.Count; i++)
                 {
+                    // I love WPF
                     if (((string)((ComboBoxItem)itemName.Items[i]).Content).Equals(_filterConfig.ItemName))
                     {
                         itemName.SelectedIndex = i;
                         break;
                     }
+                }
+
+                if (itemName.SelectedIndex == -1 && App.ExtremeMode)
+                {
+                    itemName.Text = _filterConfig.ItemName;
                 }
 
                 filterConfig.FromColor = _filterConfig.FromColor;
@@ -55,6 +75,27 @@ namespace Artorio
                 colorTo.Background = new SolidColorBrush(filterConfig.ToColor);
                 colorTo.ToolTip = filterConfig.ToColor.ToString();
             }
+            else
+            {
+                itemName.SelectedIndex = 0;
+            }
+        }
+
+        private void App_OnExtremeModeChanged(bool mode)
+        {
+            itemName.IsEditable = mode;
+
+            if (!mode)
+                itemName.SelectedIndex = 0;
+        }
+
+        public void Unload()
+        {
+            if (isUnloaded)
+                return;
+
+            isUnloaded = true;
+            App.OnExtremeModeChanged -= App_OnExtremeModeChanged;
         }
 
         private void UseRangeColor_Unchecked(object sender, RoutedEventArgs e)
@@ -69,8 +110,12 @@ namespace Artorio
 
         private void ItemName_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string placeItem = (string)((ComboBoxItem)itemName.SelectedItem).Content;
-            filterConfig.ItemName = placeItem;
+            if (itemName.SelectedIndex != -1)
+            {
+                var comboBoxItem = (ComboBoxItem)itemName.SelectedItem;
+                string placeItem = (string)comboBoxItem.Content;
+                filterConfig.ItemName = placeItem;
+            }
         }
 
         private bool SelectColor(Button owner, out Color? selectedColor)

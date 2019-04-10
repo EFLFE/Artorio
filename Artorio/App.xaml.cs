@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace Artorio
 {
@@ -9,7 +10,23 @@ namespace Artorio
     {
         public const string VERSION = "1.1.0 (dev)";
 
+        public static event Action<bool> OnExtremeModeChanged;
+
         // Access to unstable functions
-        public static bool ExtremeMode;
+        private static bool extremeMode;
+
+        public static bool ExtremeMode
+        {
+            get => extremeMode;
+            set
+            {
+                if (extremeMode != value)
+                {
+                    extremeMode = value;
+                    OnExtremeModeChanged?.Invoke(value);
+                }
+            }
+        }
+
     }
 }

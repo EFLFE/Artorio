@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using Microsoft.Win32;
 
@@ -13,7 +14,8 @@ namespace Artorio
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string SAVE_FILE = "cfg.bin";
+        private const byte CFG_VERSION = 1;
+        private const string SAVE_FILE = "cfg2.bin";
 
         private FactorioBPMaker bpMaker;
         private OpenFileDialog openFileDialog;
@@ -26,11 +28,16 @@ namespace Artorio
             inputPath.TextChanged += InputPath_TextChanged;
             warningTextBlock.Text = string.Empty;
             bpMaker = new FactorioBPMaker();
+
+            App.OnExtremeModeChanged += (mode) =>
+            {
+                InputPath_TextChanged(null, null);
+            };
         }
 
-        private void InputPath_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        // auto load image
+        private void InputPath_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // auto load image
             string path = inputPath.Text;
 
             if (!string.IsNullOrWhiteSpace(path) &&
@@ -81,8 +88,13 @@ namespace Artorio
             using (FileStream stream = File.Open(SAVE_FILE, FileMode.Open, FileAccess.Read, FileShare.None))
             using (var br = new BinaryReader(stream))
             {
-                inputPath.Text = br.ReadString();
+                byte cfgVersion = br.ReadByte();
 
+                bool extremeMode = br.ReadBoolean();
+                if (extremeMode)
+                    App.ExtremeMode = true;
+
+                inputPath.Text = br.ReadString();
                 int confCount = br.ReadInt32();
 
                 for (int i = 0; i < confCount; i++)
@@ -102,7 +114,10 @@ namespace Artorio
             using (FileStream stream = File.Open(SAVE_FILE, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
             using (var bw = new BinaryWriter(stream))
             {
+                bw.Write(CFG_VERSION);
+
                 // TODO: Save last OpenFileDialog path
+                bw.Write(App.ExtremeMode);
                 bw.Write(inputPath.Text);
 
                 int confCount = configStack.Children.Count - 1;
@@ -167,6 +182,7 @@ namespace Artorio
                 index++;
                 if (cc.ID == id)
                 {
+                    cc.Unload();
                     configStack.Children.RemoveAt(index);
                     break;
                 }

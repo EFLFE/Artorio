@@ -17,6 +17,7 @@ namespace Artorio
             InsertLink("https://github.com/EFLFE/Artorio", githubLink);
             InsertLink("https://github.com/leonbloy/pngcs", pngcs);
             InsertLink("http://www.componentace.com/zlib_.NET.htm", zlib);
+            extremeModeBtn.Content = "Extreme mode: " + (App.ExtremeMode ? "ON" : "off");
         }
 
         private void InsertLink(string link, TextBlock target)
@@ -29,8 +30,8 @@ namespace Artorio
 
         private void EnableExtremeMode(object sender, RoutedEventArgs e)
         {
-            extremeModeBtn.IsEnabled = false;
-            App.ExtremeMode = true;
+            App.ExtremeMode = !App.ExtremeMode;
+            extremeModeBtn.Content = "Extreme mode: " + (App.ExtremeMode ? "ON" : "off");
         }
     }
 }

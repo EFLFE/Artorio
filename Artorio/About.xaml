@@ -15,7 +15,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,73,0,0" TextWrapping="Wrap" Text="External libraries:" VerticalAlignment="Top"/>
         <TextBlock x:Name="pngcs" HorizontalAlignment="Left" Margin="10,94,0,0" TextWrapping="Wrap" Text="* Pngcs: " VerticalAlignment="Top"/>
         <TextBlock x:Name="zlib" HorizontalAlignment="Left" Margin="10,111,0,0" TextWrapping="Wrap" Text="* zlib.net: " VerticalAlignment="Top"/>
-        <Button x:Name="extremeModeBtn" Click="EnableExtremeMode" Content="Extreme mode" ToolTip="Access to unstable functions" HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top" Width="93">
+        <Button x:Name="extremeModeBtn" Click="EnableExtremeMode" Content="Extreme mode" ToolTip="Access to unstable functions" HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top" Width="126">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                     <GradientStop Color="#FFF1BFBF" Offset="0"/>
