@@ -8,7 +8,7 @@ namespace Artorio
     /// </summary>
     public partial class App : Application
     {
-        public const string VERSION = "1.1.0 (dev)";
+        public const string VERSION = "1.1.0";
 
         public static event Action<bool> OnExtremeModeChanged;
 
