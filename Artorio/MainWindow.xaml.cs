@@ -22,8 +22,29 @@ namespace Artorio
         {
             InitializeComponent();
             Closing += MainWindow_Closing;
-            bpMaker = new FactorioBPMaker();
             Loaded += MainWindow_Loaded;
+            inputPath.TextChanged += InputPath_TextChanged;
+            warningTextBlock.Text = string.Empty;
+            bpMaker = new FactorioBPMaker();
+        }
+
+        private void InputPath_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            // auto load image
+            string path = inputPath.Text;
+
+            if (!string.IsNullOrWhiteSpace(path) &&
+                File.Exists(path) &&
+                path.EndsWith(".png"))
+            {
+                bpMaker.LoadImage(path, out bool loadSuccess, out string erroOrWarning);
+                convertAndCopyButton.IsEnabled = loadSuccess;
+                warningTextBlock.Text = erroOrWarning ?? string.Empty;
+            }
+            else
+            {
+                convertAndCopyButton.IsEnabled = false;
+            }
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -81,6 +102,7 @@ namespace Artorio
             using (FileStream stream = File.Open(SAVE_FILE, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
             using (var bw = new BinaryWriter(stream))
             {
+                // TODO: Save last OpenFileDialog path
                 bw.Write(inputPath.Text);
 
                 int confCount = configStack.Children.Count - 1;
@@ -169,6 +191,9 @@ namespace Artorio
             if (isOk.Value)
             {
                 inputPath.Text = openFileDialog.FileName;
+
+                string fileName = Path.GetFileName(openFileDialog.FileName);
+                openFileDialog.InitialDirectory = openFileDialog.FileName.Substring(0, openFileDialog.FileName.Length - fileName.Length);
             }
         }
 
@@ -210,7 +235,7 @@ namespace Artorio
                     }
                 });
 
-                string result = bpMaker.CreateBlueprint(pngPath, out int insertItems);
+                string result = bpMaker.CreateBlueprint(out int insertItems);
 
                 if (result == null)
                 {

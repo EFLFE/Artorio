@@ -13,6 +13,7 @@ namespace Artorio
     /// </summary>
     sealed class FactorioBPMaker
     {
+        private PngData png;
         private StringBuilder sb;
         private List<IReadOnlyFilterConfig> filterConfigs;
         private int items;
@@ -29,24 +30,55 @@ namespace Artorio
 
         public void ClearFilterConfig() => filterConfigs.Clear();
 
-        public string CreateBlueprint(string pngPath, out int insertItems)
+        public void LoadImage(string path, out bool loadSuccess, out string errorOrWarning)
+        {
+            loadSuccess = true;
+            errorOrWarning = null;
+
+            try
+            {
+                png = new PngData(path);
+
+                // warning for big size
+                int size = png.GetPixelWidth * png.GetPixelHeight;
+                if (size > 262144) // 512
+                {
+                    errorOrWarning = "The size of the image is extreme!";
+
+                    if (App.ExtremeMode)
+                        errorOrWarning += " Next steps will be at your own risk.";
+                    else
+                        loadSuccess = false;
+                }
+                else if (size > 65536) // 256
+                {
+                    errorOrWarning = "The size of the image is large.";
+
+                    if (App.ExtremeMode)
+                        errorOrWarning += " Processing time may take some time (in game also).";
+                    else
+                        loadSuccess = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                loadSuccess = false;
+                errorOrWarning = ex.Message;
+            }
+
+        }
+
+        public string CreateBlueprint(out int insertItems)
         {
             if (filterConfigs.Count == 0)
                 throw new Exception("Missing filter configs.");
 
+            if (png == null)
+                throw new Exception("Image not loaded.");
+
             string output = null;
             items = 0;
             insertItems = 0;
-            var png = new PngData(pngPath);
-
-            // warning for big size
-            int size = png.GetPixelWidth * png.GetPixelHeight;
-            if (size > 262144) // 512
-            {
-                if (MessageBox.Show("The size of the image is extreme! It can take a long time to process. Continue?", "Warning",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.No)
-                    return null;
-            }
 
             sb.Clear();
 

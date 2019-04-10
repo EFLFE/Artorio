@@ -27,5 +27,10 @@ namespace Artorio
             target.Inlines.Add(hype);
         }
 
+        private void EnableExtremeMode(object sender, RoutedEventArgs e)
+        {
+            extremeModeBtn.IsEnabled = false;
+            App.ExtremeMode = true;
+        }
     }
 }

@@ -10,7 +10,7 @@
     <Grid x:Name="mainGrid">
         <TextBox x:Name="inputPath" Height="23" Margin="127,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="547"/>
         <Button Click="SelectImageClick" Content="Select image file" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Width="112"/>
-        <Button Click="ConvertAndCopyClick" Content="Convert &amp; copy" HorizontalAlignment="Left" Margin="10,53,0,0" VerticalAlignment="Top" Width="112"/>
+        <Button x:Name="convertAndCopyButton" Click="ConvertAndCopyClick" Content="Convert &amp; copy" IsEnabled="False" HorizontalAlignment="Left" Margin="10,53,0,0" VerticalAlignment="Top" Width="112"/>
         <GroupBox Header="Cast Config" HorizontalAlignment="Left" Height="330" Margin="10,80,0,0" VerticalAlignment="Top" Width="657">
             <ScrollViewer>
                 <StackPanel x:Name="configStack" Orientation="Vertical">
@@ -28,6 +28,7 @@
                 <MenuItem Header="About" Click="MenuAboutClick"/>
             </MenuItem>
         </Menu>
+        <TextBlock x:Name="warningTextBlock" Margin="256,54,10,0" TextWrapping="Wrap" Text="[!] warning text [!]" TextAlignment="Right" VerticalAlignment="Top" FontWeight="Bold"/>
 
     </Grid>
 </Window>

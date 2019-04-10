@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Artorio"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="About" Height="168.637" Width="405.104">
+        Title="About" Height="227.137" Width="415.604">
     <Grid>
         <Image HorizontalAlignment="Left" Width="32" Height="32" Margin="10,10,0,0" VerticalAlignment="Top" Source="Resources/Icon.ico"/>
         <TextBlock HorizontalAlignment="Left" Margin="47,10,0,0" TextWrapping="Wrap" Text="Artorio - convert image to factorio blueprint format. By EFLFE" VerticalAlignment="Top"/>
@@ -15,6 +15,16 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,73,0,0" TextWrapping="Wrap" Text="External libraries:" VerticalAlignment="Top"/>
         <TextBlock x:Name="pngcs" HorizontalAlignment="Left" Margin="10,94,0,0" TextWrapping="Wrap" Text="* Pngcs: " VerticalAlignment="Top"/>
         <TextBlock x:Name="zlib" HorizontalAlignment="Left" Margin="10,111,0,0" TextWrapping="Wrap" Text="* zlib.net: " VerticalAlignment="Top"/>
+        <Button x:Name="extremeModeBtn" Click="EnableExtremeMode" Content="Extreme mode" ToolTip="Access to unstable functions" HorizontalAlignment="Left" Margin="10,159,0,0" VerticalAlignment="Top" Width="93">
+            <Button.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="#FFF1BFBF" Offset="0"/>
+                    <GradientStop Color="#FFEBEBEB" Offset="0.5"/>
+                    <GradientStop Color="#FFDDDDDD" Offset="0.5"/>
+                    <GradientStop Color="#FFC7B0B0" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
 
     </Grid>
 </Window>

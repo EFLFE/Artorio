@@ -18,3 +18,4 @@
 [ ] Move config rule block up/down
 [ ] Localization support
 [ ] More colors/items
+[ ] Support image format: jpg, bmp

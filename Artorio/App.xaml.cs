@@ -8,5 +8,8 @@ namespace Artorio
     public partial class App : Application
     {
         public const string VERSION = "1.1.0 (dev)";
+
+        // Access to unstable functions
+        public static bool ExtremeMode;
     }
 }
