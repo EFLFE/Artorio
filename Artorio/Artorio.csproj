@@ -88,8 +88,6 @@
       <DependentUpon>ColorItemCast.xaml</DependentUpon>
     </Compile>
     <Compile Include="EFPNG\Color.cs" />
-    <Compile Include="EFPNG\CropData.cs" />
-    <Compile Include="EFPNG\Extra.cs" />
     <Compile Include="EFPNG\PngData.cs" />
     <Compile Include="Extra.cs" />
     <Compile Include="FactorioBPMaker.cs" />
