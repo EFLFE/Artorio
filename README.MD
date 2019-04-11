@@ -12,6 +12,11 @@
 
 Заданый в правилах цвет (или диапазон двух) пикселя превращает в заданный предмет. Тем самым можно быстро и легко перевести изображение в игру. Приоритет правил идёт сверху вниз.
 
+## System request (minimal)
+
+* Windows 7
+* .NET 4.5
+
 ## TODO
 
 - [ ] User friendly interface
@@ -19,3 +24,4 @@
 - [ ] Localization support
 - [ ] More colors/items
 - [ ] Support image format: jpg, bmp
+- [ ] Screen color picker

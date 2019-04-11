@@ -15,6 +15,8 @@ namespace Artorio
         private static System.Windows.Forms.ColorDialog colorDialog;
 
         public event Action<int> OnRemoveThisClick;
+        public event Action<int> OnMoveUpClick;
+        public event Action<int> OnMoveDownClick;
 
         public int ID { get; private set; }
 
@@ -166,6 +168,16 @@ namespace Artorio
                 filterConfig.ToColor = toColor;
                 colorTo.ToolTip = toColor.ToString();
             }
+        }
+
+        private void MoveUpClick(object sender, RoutedEventArgs e)
+        {
+            OnMoveUpClick?.Invoke(ID);
+        }
+
+        private void MoveDownClick(object sender, RoutedEventArgs e)
+        {
+            OnMoveDownClick?.Invoke(ID);
         }
     }
 }

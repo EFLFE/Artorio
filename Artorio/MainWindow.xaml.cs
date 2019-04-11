@@ -171,22 +171,65 @@ namespace Artorio
                 HorizontalAlignment = HorizontalAlignment.Left
             };
             cc.OnRemoveThisClick += ColorItemCast_OnRemoveThisClick;
+            cc.OnMoveUpClick += Cc_OnMoveUpClick;
+            cc.OnMoveDownClick += Cc_OnMoveDownClick;
             configStack.Children.Insert(configStack.Children.Count - 1, cc);
+        }
+
+        private void Cc_OnMoveUpClick(int id)
+        {
+            if (configStack.Children.Count > 2)
+            {
+                if (TryFindColorItemCast(id, out ColorItemCast colorItemCast, out int index))
+                {
+                    if (index != 0)
+                    {
+                        configStack.Children.RemoveAt(index);
+                        configStack.Children.Insert(index - 1, colorItemCast);
+                    }
+                }
+            }
+        }
+
+        private void Cc_OnMoveDownClick(int id)
+        {
+            if (configStack.Children.Count > 2)
+            {
+                if (TryFindColorItemCast(id, out ColorItemCast colorItemCast, out int index))
+                {
+                    if (index < configStack.Children.Count - 2)
+                    {
+                        configStack.Children.RemoveAt(index);
+                        configStack.Children.Insert(index + 1, colorItemCast);
+                    }
+                }
+            }
         }
 
         private void ColorItemCast_OnRemoveThisClick(int id)
         {
-            int index = -1;
+            if (TryFindColorItemCast(id, out ColorItemCast colorItemCast, out int index))
+            {
+                colorItemCast.Unload();
+                configStack.Children.RemoveAt(index);
+            }
+        }
+
+        private bool TryFindColorItemCast(int id, out ColorItemCast colorItemCast, out int index)
+        {
+            colorItemCast = null;
+            index = -1;
+
             foreach (ColorItemCast cc in ForeachColorItemCast())
             {
                 index++;
                 if (cc.ID == id)
                 {
-                    cc.Unload();
-                    configStack.Children.RemoveAt(index);
-                    break;
+                    colorItemCast = cc;
+                    return true;
                 }
             }
+            return false;
         }
 
         private void SelectImageClick(object sender, RoutedEventArgs e)

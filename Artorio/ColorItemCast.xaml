@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:Artorio"
-             mc:Ignorable="d" Width="536" Height="40">
+             mc:Ignorable="d" Width="621" Height="40">
     <Grid Background="#FFCEE6E6">
         <Button x:Name="removeThis" Click="removeThisClick" Width="13" Height="20" Content="X" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Button Click="MoveUpClick" ToolTip="Move up" Width="13" Height="20" Content="↑" HorizontalAlignment="Left" Margin="543,10,0,0" VerticalAlignment="Top"/>
+        <Button Click="MoveDownClick" ToolTip="Move down" Width="13" Height="20" Content="↓" HorizontalAlignment="Left" Margin="561,10,0,0" VerticalAlignment="Top"/>
 
         <Button x:Name="colorFrom" Click="ColorFromClick" HorizontalAlignment="Left" Height="24" Margin="149,8,0,0" VerticalAlignment="Top" Width="24" Background="White">
             <Button.BorderBrush>

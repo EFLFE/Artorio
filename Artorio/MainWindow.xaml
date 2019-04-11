@@ -8,10 +8,10 @@
         ResizeMode="CanMinimize"
         Title="Artorio" Height="450" Width="690">
     <Grid x:Name="mainGrid">
-        <TextBox x:Name="inputPath" Height="23" Margin="127,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" HorizontalAlignment="Left" Width="547"/>
+        <TextBox x:Name="inputPath" Height="23" Margin="127,26,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <Button Click="SelectImageClick" Content="Select image file" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Width="112"/>
         <Button x:Name="convertAndCopyButton" Click="ConvertAndCopyClick" Content="Convert &amp; copy" IsEnabled="False" HorizontalAlignment="Left" Margin="10,53,0,0" VerticalAlignment="Top" Width="112"/>
-        <GroupBox Header="Cast Config" HorizontalAlignment="Left" Height="330" Margin="10,80,0,0" VerticalAlignment="Top" Width="657">
+        <GroupBox Header="Cast Config" Margin="10,80,10,12">
             <ScrollViewer>
                 <StackPanel x:Name="configStack" Orientation="Vertical">
                     <!--<local:ColorItemCast Height="40" Width="640" VerticalAlignment="Top" HorizontalAlignment="Left"/>-->
