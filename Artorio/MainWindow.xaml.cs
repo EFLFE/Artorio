@@ -42,7 +42,7 @@ namespace Artorio
 
             if (!string.IsNullOrWhiteSpace(path) &&
                 File.Exists(path) &&
-                path.EndsWith(".png"))
+                path.EndsWith(".png", StringComparison.InvariantCultureIgnoreCase))
             {
                 bpMaker.LoadImage(path, out bool loadSuccess, out string erroOrWarning);
                 convertAndCopyButton.IsEnabled = loadSuccess;
@@ -255,12 +255,12 @@ namespace Artorio
 
                 if (result == null)
                 {
-                    MessageBox.Show("Filter fail", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("The filter didn't find the right colors.", "Fail", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
                     Dispatcher.Invoke(() => Clipboard.SetText(result, TextDataFormat.Text));
-                    MessageBox.Show("Success. Items: " + insertItems.ToString(), "OK", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show("Success. Blueprint the clipboard.\nItems: " + insertItems.ToString(), "OK", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (Exception ex)
