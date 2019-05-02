@@ -43,21 +43,11 @@ namespace Artorio
                 int size = png.GetPixelWidth * png.GetPixelHeight;
                 if (size > 262144) // 512
                 {
-                    errorOrWarning = "The size of the image is extreme!";
-
-                    if (App.ExtremeMode)
-                        errorOrWarning += " Next steps will be at your own risk.";
-                    else
-                        loadSuccess = false;
+                    errorOrWarning = "The size of the image is extreme! Next steps will be at your own risk.";
                 }
                 else if (size > 65536) // 256
                 {
-                    errorOrWarning = "The size of the image is large.";
-
-                    if (App.ExtremeMode)
-                        errorOrWarning += " Processing time may take some time (in game also).";
-                    else
-                        loadSuccess = false;
+                    errorOrWarning = "The size of the image is large. Processing time may take some time (in game also).";
                 }
             }
             catch (Exception ex)

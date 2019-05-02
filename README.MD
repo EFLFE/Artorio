@@ -4,7 +4,7 @@
 
 ![img](art/sample1.png)
 
-[Video](https://youtu.be/e7S25XknIVE)
+> [Video](https://youtu.be/e7S25XknIVE)
 
 ## RU :: Описание
 
@@ -25,3 +25,4 @@
 - [ ] More colors/items
 - [ ] Support image format: jpg, bmp
 - [ ] Screen color picker
+- [ ] Live preview

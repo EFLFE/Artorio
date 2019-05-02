@@ -28,11 +28,6 @@ namespace Artorio
             inputPath.TextChanged += InputPath_TextChanged;
             warningTextBlock.Text = string.Empty;
             bpMaker = new FactorioBPMaker();
-
-            App.OnExtremeModeChanged += (mode) =>
-            {
-                InputPath_TextChanged(null, null);
-            };
         }
 
         // auto load image
@@ -91,8 +86,8 @@ namespace Artorio
                 byte cfgVersion = br.ReadByte();
 
                 bool extremeMode = br.ReadBoolean();
-                if (extremeMode)
-                    App.ExtremeMode = true;
+                //if (extremeMode)
+                //    App.ExtremeMode = true;
 
                 inputPath.Text = br.ReadString();
                 int confCount = br.ReadInt32();
@@ -117,7 +112,7 @@ namespace Artorio
                 bw.Write(CFG_VERSION);
 
                 // TODO: Save last OpenFileDialog path
-                bw.Write(App.ExtremeMode);
+                bw.Write(true); // App.ExtremeMode
                 bw.Write(inputPath.Text);
 
                 int confCount = configStack.Children.Count - 1;

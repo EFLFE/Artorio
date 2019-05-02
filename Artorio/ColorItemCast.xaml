@@ -7,8 +7,8 @@
              mc:Ignorable="d" Width="621" Height="40">
     <Grid Background="#FFCEE6E6">
         <Button x:Name="removeThis" Click="removeThisClick" Width="13" Height="20" Content="X" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Button Click="MoveUpClick" ToolTip="Move up" Width="13" Height="20" Content="↑" HorizontalAlignment="Left" Margin="543,10,0,0" VerticalAlignment="Top"/>
-        <Button Click="MoveDownClick" ToolTip="Move down" Width="13" Height="20" Content="↓" HorizontalAlignment="Left" Margin="561,10,0,0" VerticalAlignment="Top"/>
+        <Button Click="MoveUpClick" ToolTip="Move up" Width="13" Height="20" Content="↑" HorizontalAlignment="Left" Margin="560,10,0,0" VerticalAlignment="Top"/>
+        <Button Click="MoveDownClick" ToolTip="Move down" Width="13" Height="20" Content="↓" HorizontalAlignment="Left" Margin="578,10,0,0" VerticalAlignment="Top"/>
 
         <Button x:Name="colorFrom" Click="ColorFromClick" HorizontalAlignment="Left" Height="24" Margin="149,8,0,0" VerticalAlignment="Top" Width="24" Background="White">
             <Button.BorderBrush>
@@ -36,10 +36,15 @@
             <ComboBoxItem Content="hazard-concrete-left"/>
             <ComboBoxItem Content="refined-concrete"/>
             <ComboBoxItem Content="refined-hazard-concrete-left"/>
+            <ComboBoxItem Content="transport-belt"/>
+            <ComboBoxItem Content="wooden-chest"/>
+            <ComboBoxItem Content="stone-wall"/>
+            <ComboBoxItem Content="gate"/>
         </ComboBox>
         <CheckBox x:Name="useRangeColor" HorizontalAlignment="Left" Margin="67,14,0,0" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="85,12,0,0" TextWrapping="Wrap" Text="range from" VerticalAlignment="Top"/>
         <!--<Rectangle Panel.ZIndex="-1" Fill="#FFA0A6B9" HorizontalAlignment="Left" Margin="59,0,0,0" Width="136"/>-->
         <Ellipse Panel.ZIndex="-1" Fill="#FFA0A6B9" HorizontalAlignment="Left" Margin="59,-20,0,0" Height="80" Width="136"/>
+        <Rectangle x:Name="itemColorRect" HorizontalAlignment="Left" Margin="536,10,0,10" Width="19" Fill="{x:Null}"/>
     </Grid>
 </UserControl>

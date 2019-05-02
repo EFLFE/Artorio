@@ -24,9 +24,7 @@ namespace Artorio
         {
             get
             {
-                if (App.ExtremeMode)
-                    filterConfig.ItemName = itemName.Text;
-
+                filterConfig.ItemName = itemName.Text;
                 return filterConfig;
             }
         }
@@ -44,10 +42,10 @@ namespace Artorio
             useRangeColor.Checked += UseRangeColor_Checked;
             useRangeColor.Unchecked += UseRangeColor_Unchecked;
 
-            if (App.ExtremeMode)
-                itemName.IsEditable = true;
+            //if (App.ExtremeMode)
+            itemName.IsEditable = true;
 
-            App.OnExtremeModeChanged += App_OnExtremeModeChanged;
+            //App.OnExtremeModeChanged += App_OnExtremeModeChanged;
 
             if (_filterConfig != null)
             {
@@ -64,7 +62,7 @@ namespace Artorio
                     }
                 }
 
-                if (itemName.SelectedIndex == -1 && App.ExtremeMode)
+                if (itemName.SelectedIndex == -1 /*&& App.ExtremeMode*/)
                 {
                     itemName.Text = _filterConfig.ItemName;
                 }
@@ -83,6 +81,7 @@ namespace Artorio
             }
         }
 
+        /*
         private void App_OnExtremeModeChanged(bool mode)
         {
             itemName.IsEditable = mode;
@@ -90,6 +89,7 @@ namespace Artorio
             if (!mode)
                 itemName.SelectedIndex = 0;
         }
+        */
 
         public void Unload()
         {
@@ -97,7 +97,63 @@ namespace Artorio
                 return;
 
             isUnloaded = true;
-            App.OnExtremeModeChanged -= App_OnExtremeModeChanged;
+            //App.OnExtremeModeChanged -= App_OnExtremeModeChanged;
+        }
+
+        private void FindItemColor(string itemName)
+        {
+            itemName = itemName.ToLower();
+            /*
+             * chest  0, 93, 148
+             * belts  140, 138, 140
+             * solar? 25, 32, 33
+             * turret 25, 32, 33
+             * wall   189, 202, 189
+             * gate   123, 125, 123
+
+             * floor:
+             * stone    49, 49, 49
+             * concrete 99, 101, 99
+             * hazard   123, 125, 0
+             */
+
+            switch (itemName)
+            {
+                case "stone-path":
+                    itemColorRect.Fill = new SolidColorBrush(Color.FromRgb(49, 49, 49));
+                    break;
+
+                case "concrete":
+                case "refined-concrete":
+                    itemColorRect.Fill = new SolidColorBrush(Color.FromRgb(99, 101, 99));
+                    break;
+
+                case "hazard-concrete-left":
+                case "refined-hazard-concrete-left":
+                    itemColorRect.Fill = new SolidColorBrush(Color.FromRgb(123, 125, 0));
+                    break;
+
+                case "transport-belt":
+                    itemColorRect.Fill = new SolidColorBrush(Color.FromRgb(140, 138, 140));
+                    break;
+
+                case "wooden-chest":
+                    itemColorRect.Fill = new SolidColorBrush(Color.FromRgb(0, 93, 148));
+                    break;
+
+                case "stone-wall":
+                    itemColorRect.Fill = new SolidColorBrush(Color.FromRgb(189, 202, 189));
+                    break;
+
+                case "gate":
+                    itemColorRect.Fill = new SolidColorBrush(Color.FromRgb(123, 125, 123));
+                    break;
+
+                default:
+                    itemColorRect.Fill = null;
+                    break;
+            }
+
         }
 
         private void UseRangeColor_Unchecked(object sender, RoutedEventArgs e)
@@ -117,6 +173,11 @@ namespace Artorio
                 var comboBoxItem = (ComboBoxItem)itemName.SelectedItem;
                 string placeItem = (string)comboBoxItem.Content;
                 filterConfig.ItemName = placeItem;
+                FindItemColor(placeItem);
+            }
+            else
+            {
+                itemColorRect.Fill = null;
             }
         }
 
