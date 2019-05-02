@@ -14,6 +14,9 @@ namespace Artorio
         private static int idIncrement;
         private static System.Windows.Forms.ColorDialog colorDialog;
 
+        private FilterConfig filterConfig;
+        private bool isUnloaded;
+
         public event Action<int> OnRemoveThisClick;
         public event Action<int> OnMoveUpClick;
         public event Action<int> OnMoveDownClick;
@@ -28,9 +31,6 @@ namespace Artorio
                 return filterConfig;
             }
         }
-
-        private FilterConfig filterConfig;
-        private bool isUnloaded;
 
         public ColorItemCast(FilterConfig _filterConfig)
         {

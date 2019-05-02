@@ -19,7 +19,7 @@
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>
-        <ProgressBar x:Name="progress" HorizontalAlignment="Left" Height="12" Margin="127,57,0,0" VerticalAlignment="Top" Width="100"/>
+        <ProgressBar x:Name="progress" HorizontalAlignment="Left" Height="12" Margin="127,58,0,0" VerticalAlignment="Top" Width="100"/>
         <Menu Height="21" VerticalAlignment="Top">
             <MenuItem Header="File">
                 <MenuItem Header="Close" Click="MenuCloseClick"/>

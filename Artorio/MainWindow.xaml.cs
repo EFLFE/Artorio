@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -268,10 +269,39 @@ namespace Artorio
             progress.IsIndeterminate = true;
             string path = inputPath.Text;
 
-            await Task.Factory.StartNew(new Action(() => CreateBlueprint(path)));
+            Task task1 = Task.Factory.StartNew(new Action(() => CreateBlueprint(path)));
+            Task task2 = Task.Factory.StartNew(new Action(() => BPProgressUpdated()));
 
-            progress.IsIndeterminate = false;
+            await Task.WhenAll(task1, task2);
+
+            progress.Value = 0.0;
             mainGrid.IsEnabled = true;
+        }
+
+        private void BPProgressUpdated()
+        {
+            for (; ; )
+            {
+                Thread.Sleep(99);
+
+                if (bpMaker.CurrentProgress < bpMaker.TargetProgress)
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        if (progress.IsIndeterminate)
+                        {
+                            progress.IsIndeterminate = false;
+                            progress.Maximum = bpMaker.TargetProgress;
+                        }
+
+                        progress.Value = bpMaker.CurrentProgress;
+                    });
+                }
+                else
+                {
+                    break;
+                }
+            }
         }
 
         private void CreateBlueprint(string pngPath)

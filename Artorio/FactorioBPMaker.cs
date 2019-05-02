@@ -20,6 +20,10 @@ namespace Artorio
 
         public bool HaveFilterConfig => filterConfigs.Count > 0;
 
+        public int CurrentProgress { get; private set; }
+
+        public int TargetProgress { get; private set; }
+
         public FactorioBPMaker()
         {
             sb = new StringBuilder();
@@ -41,13 +45,9 @@ namespace Artorio
 
                 // warning for big size
                 int size = png.GetPixelWidth * png.GetPixelHeight;
-                if (size > 262144) // 512
+                if (size >= 1048576) // 1024*1024
                 {
                     errorOrWarning = "The size of the image is extreme! Next steps will be at your own risk.";
-                }
-                else if (size > 65536) // 256
-                {
-                    errorOrWarning = "The size of the image is large. Processing time may take some time (in game also).";
                 }
             }
             catch (Exception ex)
@@ -89,6 +89,8 @@ namespace Artorio
 
             int hw = png.GetPixelWidth / 2;
             int hh = png.GetPixelHeight / 2;
+            CurrentProgress = 0;
+            TargetProgress = png.GetDataHeight * (png.GetDataWidth / 4) + 1;
 
             for (int y = 0; y < png.GetDataHeight; y++)
             {
@@ -115,6 +117,8 @@ namespace Artorio
                             break;
                         }
                     }
+
+                    CurrentProgress++;
                 }
             }
 
@@ -138,6 +142,7 @@ namespace Artorio
             }
 
             insertItems = items;
+            CurrentProgress++;
             return output;
         }
 
