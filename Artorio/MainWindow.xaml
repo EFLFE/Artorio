@@ -9,8 +9,8 @@
         Title="Artorio" Height="450" Width="690">
     <Grid x:Name="mainGrid">
         <TextBox x:Name="inputPath" Height="23" Margin="127,26,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Button Click="SelectImageClick" Content="Select image file" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Width="112"/>
-        <Button x:Name="convertAndCopyButton" Click="ConvertAndCopyClick" Content="Convert &amp; copy" IsEnabled="False" HorizontalAlignment="Left" Margin="10,53,0,0" VerticalAlignment="Top" Width="112"/>
+        <Button Click="SelectImageClick" Content="Select image file" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Width="112" Height="23"/>
+        <Button x:Name="convertAndCopyButton" Click="ConvertAndCopyClick" Content="Convert &amp; copy" IsEnabled="False" HorizontalAlignment="Left" Margin="10,54,0,0" VerticalAlignment="Top" Width="112" Height="21"/>
         <GroupBox Header="Cast Config" Margin="10,80,10,12">
             <ScrollViewer>
                 <StackPanel x:Name="configStack" Orientation="Vertical">
@@ -19,7 +19,6 @@
                 </StackPanel>
             </ScrollViewer>
         </GroupBox>
-        <ProgressBar x:Name="progress" HorizontalAlignment="Left" Height="12" Margin="127,58,0,0" VerticalAlignment="Top" Width="100"/>
         <Menu Height="21" VerticalAlignment="Top">
             <MenuItem Header="File">
                 <MenuItem Header="Close" Click="MenuCloseClick"/>

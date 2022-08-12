@@ -7,18 +7,10 @@
              mc:Ignorable="d" Width="621" Height="40">
     <Grid Background="#FFCEE6E6">
         <Button x:Name="removeThis" Click="removeThisClick" Width="13" Height="20" Content="X" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Button Click="MoveUpClick" ToolTip="Move up" Width="13" Height="20" Content="↑" HorizontalAlignment="Left" Margin="560,10,0,0" VerticalAlignment="Top"/>
-        <Button Click="MoveDownClick" ToolTip="Move down" Width="13" Height="20" Content="↓" HorizontalAlignment="Left" Margin="578,10,0,0" VerticalAlignment="Top"/>
+        <Button Click="MoveUpClick" ToolTip="Move up" Width="13" Height="20" Content="↑" HorizontalAlignment="Left" Margin="585,0,0,0" VerticalAlignment="Center"/>
+        <Button Click="MoveDownClick" ToolTip="Move down" Width="13" Height="20" Content="↓" HorizontalAlignment="Left" Margin="603,0,0,0" VerticalAlignment="Center"/>
 
-        <Button x:Name="colorFrom" Click="ColorFromClick" HorizontalAlignment="Left" Height="24" Margin="149,8,0,0" VerticalAlignment="Top" Width="24" Background="White">
-            <Button.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black" Offset="0"/>
-                    <GradientStop Color="White" Offset="1"/>
-                </LinearGradientBrush>
-            </Button.BorderBrush>
-        </Button>
-        <Button x:Name="colorTo" Click="ColorToClick" HorizontalAlignment="Left" Height="24" Margin="198,8,0,0" VerticalAlignment="Top" Width="24" Background="White">
+        <Button x:Name="colorFrom" Click="ColorFromClick" HorizontalAlignment="Left" Height="24" Margin="62,0,0,0" VerticalAlignment="Center" Width="24" Background="White">
             <Button.BorderBrush>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0"/>
@@ -27,23 +19,24 @@
             </Button.BorderBrush>
         </Button>
 
-        <TextBlock HorizontalAlignment="Left" Margin="28,11,0,0" TextWrapping="Wrap" Text="Color (" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="178,11,0,0" TextWrapping="Wrap" Text="to)" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="227,11,0,0" TextWrapping="Wrap" Text="place item" VerticalAlignment="Top"/>
-        <ComboBox x:Name="itemName" IsEditable="false" HorizontalAlignment="Left" Margin="286,10,0,0" VerticalAlignment="Top" Width="245">
-            <ComboBoxItem Content="stone-path"/>
-            <ComboBoxItem Content="concrete"/>
-            <ComboBoxItem Content="hazard-concrete-left"/>
-            <ComboBoxItem Content="refined-concrete"/>
-            <ComboBoxItem Content="refined-hazard-concrete-left"/>
-            <ComboBoxItem Content="transport-belt"/>
-            <ComboBoxItem Content="wooden-chest"/>
-            <ComboBoxItem Content="stone-wall"/>
-            <ComboBoxItem Content="gate"/>
+        <Button x:Name="colorTo" Click="ColorToClick" HorizontalAlignment="Left" Height="24" Margin="182,0,0,0" VerticalAlignment="Center" Width="24" Background="White">
+            <Button.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.BorderBrush>
+        </Button>
+
+        <TextBlock HorizontalAlignment="Left" Margin="28,0,0,0" TextWrapping="Wrap" Text="Color:" VerticalAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="217,0,0,0" TextWrapping="Wrap" Text="place item" VerticalAlignment="Center"/>
+        <ComboBox x:Name="itemName" IsEditable="false" HorizontalAlignment="Left" Margin="275,0,0,0" VerticalAlignment="Center" Width="245">
+            <!--<ComboBoxItem Content="stone-path"/>-->
         </ComboBox>
-        <CheckBox x:Name="useRangeColor" HorizontalAlignment="Left" Margin="67,14,0,0" VerticalAlignment="Top"/>
-        <TextBlock HorizontalAlignment="Left" Margin="85,12,0,0" TextWrapping="Wrap" Text="range from" VerticalAlignment="Top"/>
-        <Rectangle Panel.ZIndex="-1" Fill="#FFA0A6B9" HorizontalAlignment="Left" Margin="59,0,0,0" Width="136"/>
-        <Rectangle x:Name="itemColorRect" HorizontalAlignment="Left" Margin="536,10,0,10" Width="19" Fill="{x:Null}"/>
+        <CheckBox x:Name="useRangeColor" HorizontalAlignment="Left" Margin="114,14,0,0" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="132,0,0,0" TextWrapping="Wrap" Text="range to" VerticalAlignment="Center"/>
+        <Rectangle Panel.ZIndex="-1" Fill="#FFA0A6B9" HorizontalAlignment="Left" Margin="106,0,0,0" Width="106"/>
+        <Rectangle x:Name="itemColorRect" HorizontalAlignment="Left" Margin="525,10,0,10" Width="19" Fill="{x:Null}"/>
+        <TextBlock x:Name="filterTag" HorizontalAlignment="Left" Margin="549,0,0,0" Text="" VerticalAlignment="Center" Height="20" Width="31"/>
     </Grid>
 </UserControl>

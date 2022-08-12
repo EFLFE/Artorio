@@ -1,0 +1,17 @@
+﻿<Window x:Class="Artorio.ColorsPickerWIndow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Artorio"
+        xmlns:colorpicker="clr-namespace:ColorPicker;assembly=ColorPicker"
+        mc:Ignorable="d"
+        WindowStyle="ToolWindow"
+        ResizeMode="NoResize"
+        Title="Color picker" Height="458" Width="213">
+    <Grid>
+        <colorpicker:StandardColorPicker x:Name="main" PickerType="HSV" Height="385" VerticalAlignment="Top"/>
+        <Button Click="OnApplyClick" Content="Apply" HorizontalAlignment="Left" Margin="10,0,0,10" Height="20" VerticalAlignment="Bottom"/>
+        <Button Click="OnCancelClick" Content="Cancel" HorizontalAlignment="Right" Margin="0,0,10,10" Height="20" VerticalAlignment="Bottom"/>
+    </Grid>
+</Window>

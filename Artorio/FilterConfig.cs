@@ -7,7 +7,7 @@ namespace Artorio
         bool UseRangeColor { get; }
         Color FromColor { get; }
         Color ToColor { get; }
-        string ItemName { get; }
+        ItemData Item { get; }
     }
 
     public sealed class FilterConfig : IReadOnlyFilterConfig
@@ -15,14 +15,14 @@ namespace Artorio
         public bool UseRangeColor { get; set; }
         public Color FromColor { get; set; }
         public Color ToColor { get; set; }
-        public string ItemName { get; set; }
+        public ItemData Item { get; set; }
 
-        public FilterConfig(bool useRangeColor, Color fromColor, Color toColor, string itemName)
+        public FilterConfig(bool useRangeColor, Color fromColor, Color toColor, ItemData item)
         {
             UseRangeColor = useRangeColor;
             FromColor = fromColor;
             ToColor = toColor;
-            ItemName = itemName;
+            Item = item;
         }
     }
 }

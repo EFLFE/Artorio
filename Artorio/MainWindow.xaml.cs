@@ -76,6 +76,12 @@ namespace Artorio
             }
         }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            ColorsPickerWIndow.Instance?.CloseWindow();
+            base.OnClosed(e);
+        }
+
         private void LoadData()
         {
             if (!File.Exists(SAVE_FILE))
@@ -99,8 +105,9 @@ namespace Artorio
                     var colorFrom = Color.FromRgb(br.ReadByte(), br.ReadByte(), br.ReadByte());
                     var colorTo = Color.FromRgb(br.ReadByte(), br.ReadByte(), br.ReadByte());
                     string itemName = br.ReadString();
+                    ItemColors.FindItem(itemName, out var itemData);
 
-                    AddConfig(new FilterConfig(useRangeColor, colorFrom, colorTo, itemName));
+                    AddConfig(new FilterConfig(useRangeColor, colorFrom, colorTo, itemData));
                 }
             }
         }
@@ -134,7 +141,7 @@ namespace Artorio
                         bw.Write(conf.ToColor.G);
                         bw.Write(conf.ToColor.B);
 
-                        bw.Write(conf.ItemName);
+                        bw.Write(conf.Item.InternalName);
                     }
                 }
             }
@@ -266,42 +273,11 @@ namespace Artorio
 
             // parse
             mainGrid.IsEnabled = false;
-            progress.IsIndeterminate = true;
             string path = inputPath.Text;
 
-            Task task1 = Task.Factory.StartNew(new Action(() => CreateBlueprint(path)));
-            Task task2 = Task.Factory.StartNew(new Action(() => BPProgressUpdated()));
+            await Task.Run(new Action(() => CreateBlueprint(path)));
 
-            await Task.WhenAll(task1, task2);
-
-            progress.Value = 0.0;
             mainGrid.IsEnabled = true;
-        }
-
-        private void BPProgressUpdated()
-        {
-            for (; ; )
-            {
-                Thread.Sleep(99);
-
-                if (bpMaker.CurrentProgress < bpMaker.TargetProgress)
-                {
-                    Dispatcher.Invoke(() =>
-                    {
-                        if (progress.IsIndeterminate)
-                        {
-                            progress.IsIndeterminate = false;
-                            progress.Maximum = bpMaker.TargetProgress;
-                        }
-
-                        progress.Value = bpMaker.CurrentProgress;
-                    });
-                }
-                else
-                {
-                    break;
-                }
-            }
         }
 
         private void CreateBlueprint(string pngPath)

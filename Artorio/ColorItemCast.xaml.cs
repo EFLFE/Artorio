@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Shapes;
 
 namespace Artorio
 {
@@ -12,7 +11,6 @@ namespace Artorio
     public partial class ColorItemCast : UserControl
     {
         private static int idIncrement;
-        private static System.Windows.Forms.ColorDialog colorDialog;
 
         private FilterConfig filterConfig;
         private bool isUnloaded;
@@ -27,7 +25,8 @@ namespace Artorio
         {
             get
             {
-                filterConfig.ItemName = itemName.Text;
+                ItemColors.FindItem(itemName.Text, out var itemData);
+                SetFilterItem(itemData);
                 return filterConfig;
             }
         }
@@ -42,20 +41,25 @@ namespace Artorio
             useRangeColor.Checked += UseRangeColor_Checked;
             useRangeColor.Unchecked += UseRangeColor_Unchecked;
 
+            // load combobox items
+            foreach (var data in ItemColors.ForEachItemData())
+            {
+                itemName.Items.Add(new ComboBoxItem { Content = data.InternalName });
+            }
+
             //if (App.ExtremeMode)
             itemName.IsEditable = true;
 
             //App.OnExtremeModeChanged += App_OnExtremeModeChanged;
 
-            if (_filterConfig != null)
+            if (_filterConfig != null && _filterConfig.Item != null)
             {
                 if (_filterConfig.UseRangeColor)
                     useRangeColor.IsChecked = true;
 
                 for (int i = 0; i < itemName.Items.Count; i++)
                 {
-                    // I love WPF
-                    if (((string)((ComboBoxItem)itemName.Items[i]).Content).Equals(_filterConfig.ItemName))
+                    if (((string)((ComboBoxItem)itemName.Items[i]).Content).Equals(_filterConfig.Item.InternalName))
                     {
                         itemName.SelectedIndex = i;
                         break;
@@ -64,7 +68,7 @@ namespace Artorio
 
                 if (itemName.SelectedIndex == -1 /*&& App.ExtremeMode*/)
                 {
-                    itemName.Text = _filterConfig.ItemName;
+                    itemName.Text = _filterConfig.Item.InternalName;
                 }
 
                 filterConfig.FromColor = _filterConfig.FromColor;
@@ -130,7 +134,9 @@ namespace Artorio
             {
                 var comboBoxItem = (ComboBoxItem)itemName.SelectedItem;
                 string placeItem = (string)comboBoxItem.Content;
-                filterConfig.ItemName = placeItem;
+
+                ItemColors.FindItem(placeItem, out var itemData);
+                SetFilterItem(itemData);
                 FindItemColor(placeItem);
             }
             else
@@ -139,28 +145,47 @@ namespace Artorio
             }
         }
 
+        private void SetFilterItem(ItemData itemData)
+        {
+            filterConfig.Item = itemData;
+
+            switch (itemData.ItemType)
+            {
+                case ItemTypeEnum.Floor:
+                    filterTag.Text = "f";
+                    break;
+
+                case ItemTypeEnum.Entity:
+                    filterTag.Text = "E";
+                    break;
+
+                case ItemTypeEnum.Entity_2x2:
+                    filterTag.Text = "E 2x2";
+                    break;
+
+                case ItemTypeEnum.Entity_3x3:
+                    filterTag.Text = "E 3x3";
+                    break;
+
+                default:
+                    filterTag.Text = "?";
+                    break;
+            }
+        }
+
         private bool SelectColor(Button owner, out Color? selectedColor)
         {
-            selectedColor = null;
+            ColorsPickerWIndow.OpenWindow(((SolidColorBrush)owner.Background).Color);
 
-            if (colorDialog == null)
+            if (ColorsPickerWIndow.Instance.ColorWasSelected)
             {
-                colorDialog = new System.Windows.Forms.ColorDialog
-                {
-                    AllowFullOpen = true,
-                    FullOpen = true
-                };
-            }
-
-            colorDialog.Color = Extra.ToWinFormColor(((SolidColorBrush)owner.Background).Color);
-
-            if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                var color = Extra.ToWPFColor(colorDialog.Color);
-                owner.Background = new SolidColorBrush(color);
-                selectedColor = color;
+                var clr = ColorsPickerWIndow.Instance.GetSelectedColor;
+                selectedColor = clr;
+                owner.Background = new SolidColorBrush(clr);
                 return true;
             }
+
+            selectedColor = null;
             return false;
         }
 

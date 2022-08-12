@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Artorio.EFPng;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Text;
-using System.Windows;
-using Artorio.EFPng;
 using zlib;
+using static System.Net.WebRequestMethods;
 
 namespace Artorio
 {
@@ -15,8 +16,14 @@ namespace Artorio
     {
         private PngData png;
         private StringBuilder sb;
+        private StringBuilder sbTiles;
+        private StringBuilder sbEntities;
         private List<IReadOnlyFilterConfig> filterConfigs;
         private int items;
+        private int entityNumber;
+        private bool[,] mask;
+
+        private CultureInfo occultism;
 
         public bool HaveFilterConfig => filterConfigs.Count > 0;
 
@@ -27,7 +34,12 @@ namespace Artorio
         public FactorioBPMaker()
         {
             sb = new StringBuilder();
+            sbTiles = new StringBuilder();
+            sbEntities = new StringBuilder();
             filterConfigs = new List<IReadOnlyFilterConfig>();
+
+            occultism = (CultureInfo)CultureInfo.InvariantCulture.Clone();
+            occultism.NumberFormat.NumberDecimalSeparator = ".";
         }
 
         public void AddFilterConfig(IReadOnlyFilterConfig filter) => filterConfigs.Add(filter);
@@ -68,9 +80,12 @@ namespace Artorio
 
             string output = null;
             items = 0;
+            entityNumber = 0;
             insertItems = 0;
 
             sb.Clear();
+            sbTiles.Clear();
+            sbEntities.Clear();
 
             sb.AppendLine("{");
             sb.AppendLine("  'blueprint': {");
@@ -83,43 +98,94 @@ namespace Artorio
             sb.AppendLine("        'index': 1");
             sb.AppendLine("      }");
             sb.AppendLine("    ],");
-            sb.AppendLine("    'tiles': [");
 
-            int lastCount = sb.Length;
+            sbTiles.AppendLine("    'tiles': [ ");
+            sbEntities.AppendLine("    'entities': [ ");
+
+            int lastCount = sb.Length + sbTiles.Length + sbEntities.Length;
 
             int hw = png.GetPixelWidth / 2;
             int hh = png.GetPixelHeight / 2;
             CurrentProgress = 0;
             TargetProgress = png.GetDataHeight * (png.GetDataWidth / 4) + 1;
+            mask = new bool[(png.GetPixelWidth + 4), (png.GetPixelHeight + 4)]; // +4 to avoid checks
 
             for (int y = 0; y < png.GetDataHeight; y++)
             {
-                for (int x = 0, xx = 0; x < png.GetDataWidth; x += 4, xx++)
+                for (int x = 0, xiter = 0; x < png.GetDataWidth; x += 4, xiter++)
                 {
                     var pixel = png.GetPixelData(x, y);
 
                     // parse
                     foreach (var filter in filterConfigs)
                     {
+                        if (filter.Item.ItemType != ItemTypeEnum.Floor)
+                        {
+                            switch (filter.Item.ItemType)
+                            {
+                                case ItemTypeEnum.Entity:
+                                    if (mask[xiter, y])
+                                        continue;
+                                    break;
+
+                                case ItemTypeEnum.Entity_2x2:
+                                    if (mask[xiter, y] ||
+                                        mask[xiter + 1, y] ||
+                                        mask[xiter, y + 1] ||
+                                        mask[xiter + 1, y + 1])
+                                        continue;
+                                    break;
+
+                                case ItemTypeEnum.Entity_3x3:
+                                    for (int ox = 0; ox < 3; ox++)
+                                        for (int oy = 0; oy < 3; oy++)
+                                            if (mask[xiter + ox, y + oy])
+                                                continue;
+                                    break;
+                            }
+                        }
+
                         if (filter.UseRangeColor)
                         {
                             if (pixel.R >= filter.FromColor.R && pixel.R <= filter.ToColor.R &&
                                 pixel.G >= filter.FromColor.G && pixel.G <= filter.ToColor.G &&
                                 pixel.B >= filter.FromColor.B && pixel.B <= filter.ToColor.B)
-                            {
-                                InsertJSONItem(xx - hw, y - hh, filter.ItemName);
-                                break;
-                            }
+                            { }
+                            else continue;
                         }
-                        else if (CompareRGBColors(pixel, filter.ToColor))
+                        else if (!CompareRGBColors(pixel, filter.FromColor))
                         {
-                            InsertJSONItem(xx - hw, y - hh, filter.ItemName);
-                            break;
+                            continue;
                         }
+
+                        InsertJSONItem(xiter, hw, y, hh, filter.Item);
+
+                        switch (filter.Item.ItemType)
+                        {
+                            case ItemTypeEnum.Entity_2x2:
+                                mask[xiter, y] = true;
+                                mask[xiter + 1, y] = true;
+                                mask[xiter, y + 1] = true;
+                                mask[xiter + 1, y + 1] = true;
+                                break;
+
+                            case ItemTypeEnum.Entity_3x3:
+                                for (int ox = 0; ox < 3; ox++)
+                                    for (int oy = 0; oy < 3; oy++)
+                                        mask[xiter + ox, y + oy] = true;
+                                break;
+
+                            case ItemTypeEnum.Entity:
+                                mask[xiter, y] = true;
+                                break;
+                        }
+                        break;
                     }
 
                     CurrentProgress++;
                 }
+
+
             }
 
             if (lastCount == sb.Length)
@@ -130,8 +196,16 @@ namespace Artorio
             {
                 int len = Environment.NewLine.Length;
 
-                sb.Remove(sb.Length - len - 1, 1); // последняя запятая
-                sb.AppendLine("    ],");
+                // последняя запятая
+                sbTiles.Remove(sbTiles.Length - len - 1, 1);
+                sbEntities.Remove(sbEntities.Length - len - 1, 1);
+
+                sbTiles.AppendLine("    ],");
+                sbEntities.AppendLine("    ],");
+
+                sb.AppendLine(sbTiles.ToString());
+                sb.AppendLine(sbEntities.ToString());
+
                 sb.AppendLine("    'item': 'blueprint',");
                 sb.AppendLine("    'version': 73015558146");
                 sb.AppendLine("  } }");
@@ -163,16 +237,32 @@ namespace Artorio
                 pngColor.B == wpfColor.B;
         }
 
-        private void InsertJSONItem(int x, int y, string itemName)
+        private void InsertJSONItem(int xiter, int hw, int y, int hh, ItemData itemData)
         {
             items++;
-            sb.AppendLine("      {");
-            sb.AppendLine("        'position': {");
-            sb.AppendLine($"          'x': {x},");
-            sb.AppendLine($"          'y': {y}");
-            sb.AppendLine("        },");
-            sb.AppendLine($"        'name': '{itemName}'");
-            sb.AppendLine("      },"); //!!
+            if (itemData.ItemType == ItemTypeEnum.Floor)
+            {
+                sbTiles.AppendLine("      {");
+                sbTiles.AppendLine("        'position': {");
+                sbTiles.AppendLine($"          'x': {xiter - hw},");
+                sbTiles.AppendLine($"          'y': {y - hh}");
+                sbTiles.AppendLine("        },");
+                sbTiles.AppendLine($"        'name': '{itemData.InternalName}'");
+                sbTiles.AppendLine("      },");
+            }
+            else
+            {
+                // Entity
+                entityNumber++;
+
+                sbEntities.AppendLine(" {");
+                sbEntities.AppendLine($" 'entity_number': {entityNumber},");
+                sbEntities.AppendLine($" 'name': '{itemData.InternalName}',");
+                sbEntities.AppendLine(" 'position': {");
+                sbEntities.AppendLine($"  'x': {(xiter - (hw - 0.5)).ToString(occultism)},"); // "x": -0.5,
+                sbEntities.AppendLine($"  'y': {(y - (hh - 0.5)).ToString(occultism)}");
+                sbEntities.AppendLine(" }},");
+            }
         }
 
         private string CreateBlueprintFormat()

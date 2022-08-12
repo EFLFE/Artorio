@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Artorio"
         mc:Ignorable="d"
-        Title="GetJSONBP" Height="280" Width="520">
+        ResizeMode="CanResize"
+        Title="GetJSONBP" Height="372" Width="614">
     <Grid>
         <Button Content="Get JSON" Click="GetJsonClick" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75"/>
         <TextBox x:Name="output" Margin="10,37,10,10" TextWrapping="Wrap" Text="" ScrollViewer.VerticalScrollBarVisibility="Visible"/>
