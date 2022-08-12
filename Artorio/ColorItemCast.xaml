@@ -43,8 +43,7 @@
         </ComboBox>
         <CheckBox x:Name="useRangeColor" HorizontalAlignment="Left" Margin="67,14,0,0" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="85,12,0,0" TextWrapping="Wrap" Text="range from" VerticalAlignment="Top"/>
-        <!--<Rectangle Panel.ZIndex="-1" Fill="#FFA0A6B9" HorizontalAlignment="Left" Margin="59,0,0,0" Width="136"/>-->
-        <Ellipse Panel.ZIndex="-1" Fill="#FFA0A6B9" HorizontalAlignment="Left" Margin="59,-20,0,0" Height="80" Width="136"/>
+        <Rectangle Panel.ZIndex="-1" Fill="#FFA0A6B9" HorizontalAlignment="Left" Margin="59,0,0,0" Width="136"/>
         <Rectangle x:Name="itemColorRect" HorizontalAlignment="Left" Margin="536,10,0,10" Width="19" Fill="{x:Null}"/>
     </Grid>
 </UserControl>

@@ -103,57 +103,15 @@ namespace Artorio
         private void FindItemColor(string itemName)
         {
             itemName = itemName.ToLower();
-            /*
-             * chest  0, 93, 148
-             * belts  140, 138, 140
-             * solar? 25, 32, 33
-             * turret 25, 32, 33
-             * wall   189, 202, 189
-             * gate   123, 125, 123
 
-             * floor:
-             * stone    49, 49, 49
-             * concrete 99, 101, 99
-             * hazard   123, 125, 0
-             */
-
-            switch (itemName)
+            if (ItemColors.FindItem(itemName, out ItemData data))
             {
-                case "stone-path":
-                    itemColorRect.Fill = new SolidColorBrush(Color.FromRgb(49, 49, 49));
-                    break;
-
-                case "concrete":
-                case "refined-concrete":
-                    itemColorRect.Fill = new SolidColorBrush(Color.FromRgb(99, 101, 99));
-                    break;
-
-                case "hazard-concrete-left":
-                case "refined-hazard-concrete-left":
-                    itemColorRect.Fill = new SolidColorBrush(Color.FromRgb(123, 125, 0));
-                    break;
-
-                case "transport-belt":
-                    itemColorRect.Fill = new SolidColorBrush(Color.FromRgb(140, 138, 140));
-                    break;
-
-                case "wooden-chest":
-                    itemColorRect.Fill = new SolidColorBrush(Color.FromRgb(0, 93, 148));
-                    break;
-
-                case "stone-wall":
-                    itemColorRect.Fill = new SolidColorBrush(Color.FromRgb(189, 202, 189));
-                    break;
-
-                case "gate":
-                    itemColorRect.Fill = new SolidColorBrush(Color.FromRgb(123, 125, 123));
-                    break;
-
-                default:
-                    itemColorRect.Fill = null;
-                    break;
+                itemColorRect.Fill = new SolidColorBrush(data.MapColor);
             }
-
+            else
+            {
+                itemColorRect.Fill = null;
+            }
         }
 
         private void UseRangeColor_Unchecked(object sender, RoutedEventArgs e)
