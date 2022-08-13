@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.ConstrainedExecution;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -110,11 +111,11 @@ namespace Artorio
 
             if (ItemColors.FindItem(itemName, out ItemData data))
             {
-                itemColorRect.Fill = new SolidColorBrush(data.MapColor);
+                itemColorRect.Background = new SolidColorBrush(data.MapColor);
             }
             else
             {
-                itemColorRect.Fill = null;
+                itemColorRect.Background = null;
             }
         }
 
@@ -141,12 +142,20 @@ namespace Artorio
             }
             else
             {
-                itemColorRect.Fill = null;
+                itemColorRect.Background = null;
+                itemColorRect.Background = null;
+                filterTag.Text = "?";
             }
         }
 
         private void SetFilterItem(ItemData itemData)
         {
+            if (itemData == null)
+            {
+                filterTag.Text = "?";
+                return;
+            }
+
             filterConfig.Item = itemData;
 
             switch (itemData.ItemType)
@@ -222,6 +231,15 @@ namespace Artorio
         private void MoveDownClick(object sender, RoutedEventArgs e)
         {
             OnMoveDownClick?.Invoke(ID);
+        }
+
+        private void CopyColorFromItem(object sender, RoutedEventArgs e)
+        {
+            var color = itemColorRect.Background as SolidColorBrush;
+            var toColor = color.Color;
+            colorFrom.Background = new SolidColorBrush(toColor);
+            filterConfig.FromColor = toColor;
+            colorFrom.ToolTip = toColor.ToString();
         }
     }
 }

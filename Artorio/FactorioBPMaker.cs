@@ -12,7 +12,7 @@ namespace Artorio
     /// <summary>
     /// Factorio blueprint maker.
     /// </summary>
-    sealed class FactorioBPMaker
+    public sealed class FactorioBPMaker
     {
         private PngData png;
         private StringBuilder sb;
@@ -24,6 +24,11 @@ namespace Artorio
         private bool[,] mask;
 
         private CultureInfo occultism;
+        private ItemData[] generatedDataPreview;
+
+        public ItemData[] GeneratedDataPreview => generatedDataPreview;
+
+        public PngData LoadedPng => png;
 
         public bool HaveFilterConfig => filterConfigs.Count > 0;
 
@@ -103,6 +108,7 @@ namespace Artorio
             sbEntities.AppendLine("    'entities': [ ");
 
             int lastCount = sb.Length + sbTiles.Length + sbEntities.Length;
+            generatedDataPreview = new ItemData[png.GetDataWidth * png.GetDataHeight];
 
             int hw = png.GetPixelWidth / 2;
             int hh = png.GetPixelHeight / 2;
@@ -240,6 +246,8 @@ namespace Artorio
         private void InsertJSONItem(int xiter, int hw, int y, int hh, ItemData itemData)
         {
             items++;
+            generatedDataPreview[xiter + y * png.GetPixelWidth] = itemData;
+
             if (itemData.ItemType == ItemTypeEnum.Floor)
             {
                 sbTiles.AppendLine("      {");

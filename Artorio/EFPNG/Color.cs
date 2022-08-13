@@ -2,7 +2,7 @@
 
 namespace Artorio.EFPng
 {
-    internal struct Color
+    public struct Color
     {
         public byte R;
         public byte G;

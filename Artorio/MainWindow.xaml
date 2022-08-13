@@ -5,12 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Artorio"
         mc:Ignorable="d"
-        ResizeMode="CanMinimize"
-        Title="Artorio" Height="450" Width="690">
+        ResizeMode="CanResize"
+        Title="Artorio"
+        MinHeight="450" MinWidth="690"
+        Height="450" Width="690">
     <Grid x:Name="mainGrid">
         <TextBox x:Name="inputPath" Height="23" Margin="127,26,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <Button Click="SelectImageClick" Content="Select image file" HorizontalAlignment="Left" Margin="10,26,0,0" VerticalAlignment="Top" Width="112" Height="23"/>
-        <Button x:Name="convertAndCopyButton" Click="ConvertAndCopyClick" Content="Convert &amp; copy" IsEnabled="False" HorizontalAlignment="Left" Margin="10,54,0,0" VerticalAlignment="Top" Width="112" Height="21"/>
+        <Button x:Name="convertAndCopyButton" Click="ConvertAndCopyClick" Content="Convert &amp; preview" IsEnabled="False" HorizontalAlignment="Left" Margin="10,54,0,0" VerticalAlignment="Top" Width="112" Height="21"/>
         <GroupBox Header="Cast Config" Margin="10,80,10,12">
             <ScrollViewer>
                 <StackPanel x:Name="configStack" Orientation="Vertical">
@@ -30,7 +32,8 @@
                 <MenuItem Header="About" Click="MenuAboutClick"/>
             </MenuItem>
         </Menu>
-        <TextBlock x:Name="warningTextBlock" Margin="256,54,10,0" TextWrapping="Wrap" Text="[!] warning text [!]" TextAlignment="Right" VerticalAlignment="Top" FontWeight="Bold"/>
+        <TextBlock x:Name="warningTextBlock" Margin="127,54,10,0" TextWrapping="Wrap" Text="[!] warning text [!]" TextAlignment="Left"
+                   VerticalAlignment="Top" FontWeight="Bold" Height="21" FontSize="14" Foreground="#FF840000"/>
 
     </Grid>
 </Window>

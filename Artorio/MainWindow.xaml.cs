@@ -303,8 +303,11 @@ namespace Artorio
                 }
                 else
                 {
-                    Dispatcher.Invoke(() => Clipboard.SetText(result, TextDataFormat.Text));
-                    MessageBox.Show("Success. Blueprint the clipboard.\nItems: " + insertItems.ToString(), "OK", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Dispatcher.Invoke(() =>
+                    {
+                        var preview = new PreviewWindow();
+                        preview.ShowWindow(bpMaker, result, insertItems);
+                    });
                 }
             }
             catch (Exception ex)

@@ -4,7 +4,7 @@ using Hjg.Pngcs;
 
 namespace Artorio.EFPng
 {
-    internal sealed class PngData
+    public sealed class PngData
     {
         private byte[,] imgData;
         private int pixelWidth;

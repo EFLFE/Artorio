@@ -36,7 +36,15 @@
         <CheckBox x:Name="useRangeColor" HorizontalAlignment="Left" Margin="114,14,0,0" VerticalAlignment="Top"/>
         <TextBlock HorizontalAlignment="Left" Margin="132,0,0,0" TextWrapping="Wrap" Text="range to" VerticalAlignment="Center"/>
         <Rectangle Panel.ZIndex="-1" Fill="#FFA0A6B9" HorizontalAlignment="Left" Margin="106,0,0,0" Width="106"/>
-        <Rectangle x:Name="itemColorRect" HorizontalAlignment="Left" Margin="525,10,0,10" Width="19" Fill="{x:Null}"/>
+        <!--<Rectangle x:Name="itemColorRect" HorizontalAlignment="Left" Margin="525,10,0,10" Width="19" Fill="{x:Null}"/>-->
+        <Button x:Name="itemColorRect" Click="CopyColorFromItem" HorizontalAlignment="Left" Margin="525,10,0,10" Width="19" VerticalAlignment="Center" Height="20" Background="{x:Null}">
+            <Button.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Button.BorderBrush>
+        </Button>
         <TextBlock x:Name="filterTag" HorizontalAlignment="Left" Margin="549,0,0,0" Text="" VerticalAlignment="Center" Height="20" Width="31"/>
     </Grid>
 </UserControl>

@@ -16,7 +16,7 @@ namespace Artorio
                 // floors
                 new ItemData("stone-path", Color.FromRgb(80,82,72), ItemTypeEnum.Floor),
                 new ItemData("concrete", Color.FromRgb(56, 56, 56), ItemTypeEnum.Floor),
-                new ItemData("refined-concrete-left", Color.FromRgb(48, 48, 40), ItemTypeEnum.Floor),
+                new ItemData("refined-concrete", Color.FromRgb(48, 48, 40), ItemTypeEnum.Floor),
                 new ItemData("hazard-concrete-left", Color.FromRgb(176, 138, 32), ItemTypeEnum.Floor),
                 new ItemData("refined-hazard-concrete-left", Color.FromRgb(112, 90, 24) , ItemTypeEnum.Floor),
 
