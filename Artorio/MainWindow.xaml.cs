@@ -154,7 +154,6 @@ namespace Artorio
 
             for (int i = 0; i < configStack.Children.Count - 1; i++)
             {
-                // TODO: Optimize
                 yield return (ColorItemCast)configStack.Children[i];
             }
         }

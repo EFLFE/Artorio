@@ -17,6 +17,7 @@ namespace Artorio
             InsertLink("https://github.com/EFLFE/Artorio", githubLink);
             InsertLink("https://github.com/leonbloy/pngcs", pngcs);
             InsertLink("http://www.componentace.com/zlib_.NET.htm", zlib);
+            InsertLink("https://github.com/PixiEditor/ColorPicker", colorPicker);
         }
 
         private void InsertLink(string link, TextBlock target)

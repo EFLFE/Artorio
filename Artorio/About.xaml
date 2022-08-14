@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Artorio"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="About" Height="172.637" Width="415.604">
+        Title="About" Height="205" Width="415.604">
     <Grid>
         <Image HorizontalAlignment="Left" Width="32" Height="32" Margin="10,10,0,0" VerticalAlignment="Top" Source="Resources/Icon.ico"/>
         <TextBlock HorizontalAlignment="Left" Margin="47,10,0,0" TextWrapping="Wrap" Text="Artorio - convert image to factorio blueprint format. By EFLFE" VerticalAlignment="Top"/>
@@ -15,6 +15,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="10,73,0,0" TextWrapping="Wrap" Text="External libraries:" VerticalAlignment="Top"/>
         <TextBlock x:Name="pngcs" HorizontalAlignment="Left" Margin="10,94,0,0" TextWrapping="Wrap" Text="* Pngcs: " VerticalAlignment="Top"/>
         <TextBlock x:Name="zlib" HorizontalAlignment="Left" Margin="10,111,0,0" TextWrapping="Wrap" Text="* zlib.net: " VerticalAlignment="Top"/>
+        <TextBlock x:Name="colorPicker" HorizontalAlignment="Left" Margin="10,128,0,0" TextWrapping="Wrap" Text="* ColorPicker: " VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
